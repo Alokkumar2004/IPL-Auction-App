@@ -1,13 +1,217 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* === IPL Auction App Styling === */
+:root {
+  --bg: linear-gradient(135deg, #0f172a, #1e3a8a);
+  --card-bg: rgba(255, 255, 255, 0.12);
+  --accent: #38bdf8;
+  --text-light: #f8fafc;
+  --border: rgba(255, 255, 255, 0.15);
+  --success: #22c55e;
+  --warn: #facc15;
+  --highlight: #ffd94d;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* === Main Layout === */
+.app {
+  min-height: 100vh;
+  display: flex;
+  background-color: #041124;
+  color: white;
+  overflow: hidden;
+}
+
+/* === Column Layouts === */
+.left-column {
+  width: 20%;
+  height: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.center-column {
+  width: 60%;
+  padding: 20px;
+}
+
+.right-column {
+  width: 20%;
+  height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* === Scroll Containers === */
+.player-scroll, .team-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+  scrollbar-width: thin;
+  scrollbar-color: #007bff #0a1d4c;
+}
+
+.player-scroll::-webkit-scrollbar,
+.team-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.player-scroll::-webkit-scrollbar-thumb,
+.team-scroll::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 6px;
+}
+
+.player-scroll::-webkit-scrollbar-track,
+.team-scroll::-webkit-scrollbar-track {
+  background: #0a1d4c;
+}
+
+/* === PLAYER & TEAM CARDS === */
+.player-card, .team-card {
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: white;
+  width: 100%;
+  max-width: 220px;
+  background-color: #0a1d4c;
+  box-shadow: 0 0 6px 1px rgba(255,255,255,0.15);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.25s ease;
+}
+
+/* === Active Player Highlight === */
+.player-card.current {
+  background-color: #1b2a64;
+  box-shadow: 0 0 20px 5px var(--highlight);
+  animation: highlight-glow 0.6s ease;
+}
+
+/* Prevent persistent glow on old cards */
+.player-card:not(.current) {
+  box-shadow: 0 0 6px 1px rgba(255,255,255,0.15);
+  background-color: #0a1d4c;
+}
+
+/* Glow animation */
+@keyframes highlight-glow {
+  0% { box-shadow: 0 0 0px 0px var(--highlight); }
+  50% { box-shadow: 0 0 15px 4px var(--highlight); }
+  100% { box-shadow: 0 0 20px 5px var(--highlight); }
+}
+
+/* Text inside cards */
+.player-card h4 {
+  margin: 4px 0;
+  color: var(--highlight);
+}
+
+.player-card p {
+  margin: 2px 0;
+  font-size: 0.8rem;
+}
+
+/* Status styles */
+.player-card.sold { color: var(--success); font-weight: bold; }
+.player-card.unsold { color: #f87171; font-weight: bold; }
+.player-card.awaiting { color: #aaa; }
+
+/* === Player Image === */
+.player-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 6px;
+  border: 1px solid #fff;
+}
+
+/* === Auction Panel === */
+.center-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auction-panel {
+  width: 100%;
+  max-width: 740px;
+  min-height: 360px;
+  background-color: #0a1d4c;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.15);
+  text-align: center;
+  color: white;
+}
+
+/* === Buttons === */
+.btn-success, .btn-danger {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-success { background: #28a745; }
+.btn-danger { background: #dc3545; }
+.btn-success:hover, .btn-danger:hover { opacity: 0.85; }
+
+/* === Auction Ended Banner === */
+.auction-ended-banner {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(4,17,36,0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  color: var(--highlight);
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 20px #ffcf40;
+}
+
+.auction-ended-banner button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.auction-ended-banner .btn-stats {
+  background: var(--highlight);
+  color: #000;
+}
+
+.auction-ended-banner .btn-restart {
+  background: #ff4d4d;
+  color: #fff;
+}
+
+.auction-ended-banner button:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
 }
