@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/IPL-Auction-App/static/css/main.41239e33.css",
+    "main.js": "/IPL-Auction-App/static/js/main.2a4d69e9.js",
+    "index.html": "/IPL-Auction-App/index.html",
+    "main.41239e33.css.map": "/IPL-Auction-App/static/css/main.41239e33.css.map",
+    "main.2a4d69e9.js.map": "/IPL-Auction-App/static/js/main.2a4d69e9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.41239e33.css",
+    "static/js/main.2a4d69e9.js"
+  ]
+}
